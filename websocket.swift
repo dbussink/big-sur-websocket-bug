@@ -15,7 +15,7 @@ class CloseDelegate: NSObject, URLSessionWebSocketDelegate {
 let session = URLSession(configuration: .default, delegate: CloseDelegate(), delegateQueue: OperationQueue())
 
 // Point at a websocket echo service
-let task = session.webSocketTask(with: URL(string: "ws://127.0.0.1:8080")!)
+let task = session.webSocketTask(with: URL(string: "wss://echo.websocket.org")!)
 
 
 // Send a message that triggers compression heuristics. It seems like a small non
