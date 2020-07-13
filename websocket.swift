@@ -1,6 +1,11 @@
 import Foundation
 
 
+func randomString(length: Int) -> String {
+  let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+  return String((0..<length).map{ _ in letters.randomElement()! })
+}
+
 class CloseDelegate: NSObject, URLSessionWebSocketDelegate {
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
         var rsn = "nil"
@@ -21,7 +26,7 @@ let task = session.webSocketTask(with: URL(string: "wss://echo.websocket.org")!)
 // Send a message that triggers compression heuristics. It seems like a small non
 // repetitive message doesn't error out, but anything that's more repetative or
 // larger will trigger compression.
-let textMessage = URLSessionWebSocketTask.Message.string("aaaaaaaaaaaaaaaaa")
+let textMessage = URLSessionWebSocketTask.Message.string(randomString(length: 1024))
 
 // Send the message that the echo server will send back.
 task.send(textMessage) { error in
