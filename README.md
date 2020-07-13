@@ -23,3 +23,10 @@ See the code for more details on when this bug gets triggered.
 Error when receiving: Error Domain=NSPOSIXErrorDomain Code=57 "Socket is not connected" UserInfo={NSErrorFailingURLStringKey=https://echo.websocket.org/, NSErrorFailingURLKey=https://echo.websocket.org/}
 Closed: 1002 with reason: nil
 ```
+
+## Running on Catalina
+
+```
+./websocket
+Text received: aaaaaaaaaaaaaaaaa
+```
