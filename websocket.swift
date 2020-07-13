@@ -26,13 +26,65 @@ let task = session.webSocketTask(with: URL(string: "wss://echo.websocket.org")!)
 // Send a message that triggers compression heuristics. It seems like a small non
 // repetitive message doesn't error out, but anything that's more repetative or
 // larger will trigger compression.
-let textMessage = URLSessionWebSocketTask.Message.string(randomString(length: 1024))
+let textMessage1 = URLSessionWebSocketTask.Message.string(randomString(length: 10240))
+let textMessage2 = URLSessionWebSocketTask.Message.string(randomString(length: 10240))
+let textMessage3 = URLSessionWebSocketTask.Message.string(randomString(length: 10240))
 
 // Send the message that the echo server will send back.
-task.send(textMessage) { error in
+task.send(textMessage1) { error in
   if let error = error {
     print("WebSocket couldn’t send message because: \(error)")
   }
+}
+
+// Send the message that the echo server will send back.
+task.send(textMessage2) { error in
+  if let error = error {
+    print("WebSocket couldn’t send message because: \(error)")
+  }
+}
+
+// Send the message that the echo server will send back.
+task.send(textMessage3) { error in
+  if let error = error {
+    print("WebSocket couldn’t send message because: \(error)")
+  }
+}
+
+// Receive message back from echo server.
+task.receive { result in
+    switch result {
+    case .success(let message):
+        switch message {
+        case .data(let data):
+            print("Data received: \(data)")
+        case .string(let text):
+            print("Text received: \(text)")
+        default:
+            print("Invalid response: \(message)")
+            exit(EXIT_FAILURE)
+        }
+    case .failure(let error):
+        print("Error when receiving: \(error)")
+    }
+}
+
+// Receive message back from echo server.
+task.receive { result in
+    switch result {
+    case .success(let message):
+        switch message {
+        case .data(let data):
+            print("Data received: \(data)")
+        case .string(let text):
+            print("Text received: \(text)")
+        default:
+            print("Invalid response: \(message)")
+            exit(EXIT_FAILURE)
+        }
+    case .failure(let error):
+        print("Error when receiving: \(error)")
+    }
 }
 
 // Receive message back from echo server.
@@ -53,6 +105,7 @@ task.receive { result in
         print("Error when receiving: \(error)")
     }
 }
+
 
 task.resume()
 dispatchMain()
